@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.quantbit.accidentmanagement.ui.emergency_contacts.list_contact.EmergencyContactsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/buttonAddContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Contact"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/buttonAddDevice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Device"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <!-- RecyclerView for Contacts -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_emergency_contacts" />
+
+        <!-- TextView to display when no contacts are available -->
+        <TextView
+            android:id="@+id/textViewNoContacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No emergency contacts available."
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+
+        <!-- RecyclerView for Devices -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDevices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_registered_device" />
+
+        <!-- TextView to display when no devices are available -->
+        <TextView
+            android:id="@+id/textViewNoDevices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No devices available."
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.quantbit.accidentmanagement.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_contact_list"
+        android:name="com.quantbit.accidentmanagement.ui.emergency_contacts.list_contact.EmergencyContactFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_emergency_contacts" >
+        <action
+            android:id="@+id/action_nav_contact_list_to_nav_add_contact"
+            app:destination="@id/nav_add_contact" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_contact"
+        android:name="com.quantbit.accidentmanagement.ui.emergency_contacts.add_contact.AddContactFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_add_contact" >
+        <argument
+            android:name="contact"
+            app:argType="com.quantbit.accidentmanagement.ui.emergency_contacts.EmergencyContact" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_bluetooth_device"
+        android:name="com.quantbit.accidentmanagement.ui.ble.BluetoothFragment"
+        android:label="@string/menu_bluetooth"
+        tools:layout="@layout/fragment_bluetooth" />
+    <fragment
+        android:id="@+id/nav_bluetooth_event"
+        android:name="com.quantbit.accidentmanagement.ui.ble_events.BLELogFragment"
+        android:label="Bluetooth Event Logs"
+        tools:layout="@layout/fragment_b_l_e_log"/>
+    <fragment
+        android:id="@+id/nav_notification_log"
+        android:name="com.quantbit.accidentmanagement.ui.notification_log.NotificationLogFragment"
+        android:label="Notifications" />
+</navigation>

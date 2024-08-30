@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.quantbit.accidentmanagement.ui.emergency_contacts.list_contact.EmergencyContactsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputName"
+            style="@style/InputOuterBox"
+            android:hint="Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                style="@style/InputFieldStyle"
+                android:text="@={viewModel.contact.contact_name}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputPhone"
+            style="@style/InputOuterBox"
+            android:hint="Phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPhone"
+                style="@style/InputFieldStyle"
+                android:text="@={viewModel.contact.phone}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputEmail"
+            style="@style/InputOuterBox"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                style="@style/InputFieldStyle"
+                android:text="@={viewModel.contact.email}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputRelationship"
+            style="@style/InputOuterBox"
+            android:hint="@string/relationship">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextRelationship"
+                style="@style/InputFieldStyle"
+                android:text="@={viewModel.contact.relation}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_margin="20dp"
+            android:id="@+id/buttonSaveContact"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Save"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:onClick="@{() -> viewModel.saveContacts()}" />
+    </LinearLayout>
+</layout>

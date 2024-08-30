@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.quantbit.accidentmanagement.ui.notification_log.NotificationLogViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/text"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Details and Messages"
+            android:textColor="@color/purple_700"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+
+        <!-- TextView to display when no contacts are available -->
+        <TextView
+            android:id="@+id/textViewNoContacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No emergency contacts available."
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+
+
+        <!-- RecyclerView for Devices -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contactList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_registered_device" />
+
+        <!-- TextView to display when no devices are available -->
+        <TextView
+            android:id="@+id/textViewNoDevices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No devices available."
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</layout>
