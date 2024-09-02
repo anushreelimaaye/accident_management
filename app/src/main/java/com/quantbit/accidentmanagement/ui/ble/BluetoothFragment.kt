@@ -119,6 +119,7 @@ class BluetoothFragment : BaseFragment(), OnItemClickListener {
         ) {
             return
         }
+        Toast.makeText(context,"Please wait for a while",Toast.LENGTH_SHORT).show()
         val intent = Intent(context, BleService::class.java)
         intent.putExtra("device_address", device.address)
         intent.putExtra("device_name", device.name)

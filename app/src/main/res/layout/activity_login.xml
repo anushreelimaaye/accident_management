@@ -4,22 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/imageView"
-            android:background="@drawable/accident_management"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="200dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtUsername"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/accident_management"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.407" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtUrl"
@@ -27,10 +25,12 @@
             android:hint="Url"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView">
+            app:layout_constraintTop_toBottomOf="@id/imageView"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputUrl"
+                android:text="http://45.249.255.81:4419/"
                 style="@style/InputFieldStyle"
                 tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -41,7 +41,8 @@
             android:hint="Username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtUrl">
+            app:layout_constraintTop_toBottomOf="@id/txtUrl"
+            android:layout_marginTop="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
@@ -56,34 +57,53 @@
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtUsername">
+            app:layout_constraintTop_toBottomOf="@id/txtUsername"
+            android:layout_marginTop="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:inputType="textPassword"
                 android:id="@+id/password"
+                android:inputType="textPassword"
                 style="@style/InputFieldStyle"
                 tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Forgot Password?"
+            android:textAlignment="textEnd"
+            style="@style/NormalText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPassword" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:text="Log In"
             style="@style/ButtonStyle"
-            app:layout_constraintBottom_toTopOf="@id/txtForgotPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtForgotPassword" />
+            app:layout_constraintTop_toBottomOf="@id/txtForgotPassword"
+            android:layout_margin="15dp"
+            android:layout_marginHorizontal="16dp" />
 
         <TextView
-            android:layout_margin="10dp"
-            android:id="@+id/txtForgotPassword"
+            android:id="@+id/txtDevelopedBy"
             style="@style/NormalText"
-            android:textAlignment="textEnd"
-            android:text="Forgot Password?"
-            app:layout_constraintBottom_toTopOf="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/developed_by_quantbiz_technologies"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:paddingBottom="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

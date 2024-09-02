@@ -59,7 +59,13 @@ class BleService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val deviceAddress = intent?.getStringExtra("device_address")
         val deviceName = intent?.getStringExtra("device_name")
-        deviceAddress?.let { connectToDevice(it,deviceName!!) }
+        deviceAddress?.let {
+            if(deviceAddress != null) {
+                connectToDevice(it, deviceName!!)
+            }else{
+                Toast.makeText(applicationContext,"Sorry, not able to connect",Toast.LENGTH_SHORT).show()
+            }
+        }
         sharedUtility.saveString("device_name",deviceName!!)
         sharedUtility.saveString("device_address",deviceAddress!!)
         startForegroundService()
@@ -191,33 +197,73 @@ class BleService : Service() {
 
     }
 
-    private fun listenForData(deviceName: String,deviceAddress: String) {
-        val buffer = ByteArray(1024)
+    private fun listenForData(deviceName: String, deviceAddress: String) {
+        val buffer = ByteArray(1024) // Adjust buffer size as needed
         var bytes: Int
 
-        while (isConnected) {
-            try {
-                bytes = inputStream?.read(buffer) ?: -1
-                if (bytes > 0) {
-                    val receivedData = String(buffer, 0, bytes)
-                    Log.d("BluetoothService", "Received: $receivedData")
+        CoroutineScope(Dispatchers.IO).launch {
+            while (isConnected) {
+                try {
+                    // Read data into the buffer
+                    bytes = inputStream?.read(buffer) ?: -1
 
-                    // Send notification with received data
-                    if(receivedData == "GPIO Interrupt Triggered") {
-                        sendNotification(receivedData)
-                        getCurrentLocationAndSendSms()
+                    if (bytes > 0) {
+                        val receivedData = String(buffer, 0, bytes).trim() // Trim any excess whitespace
+                        Log.d("BluetoothService", "Received: $receivedData")
+
+                        // Check for specific data and process accordingly
+                        if (receivedData == "GPIO Interrupt Triggered") {
+                            withContext(Dispatchers.Main) {
+                                sendNotification(receivedData)
+                                getCurrentLocationAndSendSms()
+                            }
+                        }
+
+                        // Optionally, you can handle other types of data here
+
+                        // Send connection status
+                        sendConnectionStatus("Connected", deviceName, deviceAddress, "Event Triggered")
+                    } else if (bytes == -1) {
+                        // End of stream
+                        handleDisconnection()
                     }
-                    sendConnectionStatus("Connected",deviceName,deviceAddress,"Event Triggered")
-                   // sendSMS("7709811684","Please something happened")
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    sendConnectionStatus("Disconnected", deviceName, deviceAddress, "Device disconnected")
+                    handleDisconnection()
                 }
-            } catch (e: IOException) {
-                e.printStackTrace()
-
-                sendConnectionStatus("Disconnected",deviceName,deviceAddress,"Device disconnected")
-                handleDisconnection()
             }
         }
     }
+
+
+//    private fun listenForData(deviceName: String,deviceAddress: String) {
+//        val buffer = ByteArray(1024)
+//        var bytes: Int
+//
+//        while (isConnected) {
+//            try {
+//                bytes = inputStream?.read(buffer) ?: -1
+//                if (bytes > 0) {
+//                    val receivedData = String(buffer, 0, bytes)
+//                    Log.d("BluetoothService", "Received: $receivedData")
+//
+//                    // Send notification with received data
+//                    if(receivedData == "GPIO Interrupt Triggered") {
+//                        sendNotification(receivedData)
+//                        getCurrentLocationAndSendSms()
+//                    }
+//                    sendConnectionStatus("Connected",deviceName,deviceAddress,"Event Triggered")
+//
+//                }
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//
+//                sendConnectionStatus("Disconnected",deviceName,deviceAddress,"Device disconnected")
+//                handleDisconnection()
+//            }
+//        }
+//    }
 
     private fun sendNotification(data: String) {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -247,8 +293,7 @@ class BleService : Service() {
 
                         // Send the SMS to each contact
                         contacts.forEach { contact ->
-                            val message = "Emergency Alert!\n" + "Hello ${contact.contact_name}"+
-                                    "I need help. My current location is: https://maps.google.com/?q=$latitude,$longitude"
+                            val message = "Emergency Alert!\n" + "Hello ${contact.contact_name},"+ "I need help.\n My current location is: https://maps.google.com/?q=$latitude,$longitude"
 
                             contactList.add(Contact(contact.contact_name!!,contact.phone!!,message))
                             sendSMS(contact.contact_name!!,contact.phone!!, message)

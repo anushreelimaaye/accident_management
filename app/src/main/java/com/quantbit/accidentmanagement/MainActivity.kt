@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,7 +23,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.navigation.ui.NavigationUI
 import com.quantbit.accidentmanagement.databinding.ActivityMainBinding
+import com.quantbit.accidentmanagement.ui.login.ui.login.LoginActivity
 import com.quantbit.accidentmanagement.utility.SharedUtility
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +63,20 @@ class MainActivity : AppCompatActivity() {
         headerTextView.text =user
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_log_out -> {
+                    handleLogout() // Your custom logout handling function
+                    true // Indicate that the logout item has been handled
+                }
+                else -> {
+                    // Default behavior: Let the NavController handle the navigation
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+            }
+        }
 
         setupBluetoothLauncher()
         checkBluetoothPermissions()
@@ -124,6 +142,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.nav_log_out -> {
+                handleLogout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun handleLogout() {
+        clearUserSession()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()  // Finish the current activity
+    }
+
+    private fun clearUserSession() {
+        // Example for clearing SharedPreferences
+       val sharedUtility = SharedUtility(applicationContext)
+        sharedUtility.clear()
+
+        // If using authentication tokens or other session data, clear them here
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

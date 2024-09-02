@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AccidentManagement</string>
+    <string name="app_name">Accident Management</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -24,4 +24,5 @@
     <string name="relationship">Relationship</string>
     <string name="event_logs">Event Logs</string>
     <string name="notifications">Notifications</string>
+    <string name="developed_by_quantbiz_technologies">Developed by \n QuantBit Technologies Pvt Ltd.</string>
 </resources>

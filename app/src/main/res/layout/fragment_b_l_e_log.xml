@@ -39,77 +39,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp">
+
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textDeviceName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text='@{"Name: "+viewModel.device}'
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:id="@+id/textDeviceName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text='@{"Name:" + viewModel.device}' />
-
-                    <TextView
-                        android:id="@+id/textDeviceAddress"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text='@{"Address:" + viewModel.address}'
-                        android:gravity="end" />
-                </LinearLayout>
-
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textDeviceAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text='@{"Address: " + viewModel.address}'
+                    android:paddingEnd="16dp" />
 
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:id="@+id/textViewName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.connectionData.connection_status}" />
-
-                    <TextView
-                        android:id="@+id/textViewPhone"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@{viewModel.connectionData.last_connection_time}"
-                        android:gravity="end" />
-                </LinearLayout>
-
-                <!-- Second row: Email and Relationship (Email at start, Relationship at end) -->
-                <LinearLayout
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/textViewName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                    android:text='@{"Last Status: "+ viewModel.connectionData.connection_status}'
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
-                    <TextView
-                        android:id="@+id/textViewEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.connectionData.battery_status}" />
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='@{"Last connection time: "+ viewModel.connectionData.last_connection_time}'
+                    android:paddingEnd="16dp"
+                   />
 
-
-                </LinearLayout>
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/textBatteryStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='@{"Battery Status(%): "+ viewModel.connectionData.battery_status}'
+                    android:paddingEnd="16dp"
+                />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
 
         <!-- RecyclerView for Devices -->
         <androidx.recyclerview.widget.RecyclerView

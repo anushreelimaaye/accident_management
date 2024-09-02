@@ -1,11 +1,14 @@
 package com.quantbit.accidentmanagement.ui.emergency_contacts.list_contact
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigation.findNavController
 import com.quantbit.accidentmanagement.model.ApiDataResponse
 import com.quantbit.accidentmanagement.model.ApiResponse
 import com.quantbit.accidentmanagement.ui.emergency_contacts.ContactRepository
@@ -16,6 +19,7 @@ import com.quantbit.accidentmanagement.utility.SharedUtility
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import androidx.navigation.fragment.findNavController
 
 
 class EmergencyContactsViewModel(private val repository: ContactRepository,private val context: Context) : ViewModel() {
@@ -65,7 +69,25 @@ class EmergencyContactsViewModel(private val repository: ContactRepository,priva
                 val userData = UserData(user, listOf(contactData), devices)
 
                 val response = repository.saveContacts(userData,token)
+                when(response){
+                    is com.quantbit.accidentmanagement.ui.login.data.Result.Success -> {
+                        if(response.data.message.status.equals("success")) {
+                            Toast.makeText(
+                                context,
+                                "Contact has been added successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    }
+
+                    is com.quantbit.accidentmanagement.ui.login.data.Result.Error -> {
+
+                    }
+                }
                 _result.value = response
+
+
             } catch (e: Exception) {
                 _result.value = com.quantbit.accidentmanagement.ui.login.data.Result.Error(IOException("Unexpected error saving contacts", e))
             }
@@ -97,8 +119,10 @@ class EmergencyContactsViewModel(private val repository: ContactRepository,priva
                 when (result) {
                     is com.quantbit.accidentmanagement.ui.login.data.Result.Success -> {
                         // Set the value of _userData with the data from Result.Success
+
                         _userData.value = result.data
                         Log.d("EmergencyViewmodel",result.data.toString())
+
                     }
                     is com.quantbit.accidentmanagement.ui.login.data.Result.Error -> {
                         // Handle the error case

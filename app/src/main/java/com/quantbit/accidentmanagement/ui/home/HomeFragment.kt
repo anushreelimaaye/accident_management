@@ -79,8 +79,11 @@ class HomeFragment : Fragment(), OnItemClickListener {
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            Toast.makeText(context,"Please make sure all permissions are granted",Toast.LENGTH_SHORT).show()
             return
         }
+
+        Toast.makeText(context,"Please wait for a while",Toast.LENGTH_SHORT).show()
         if (viewModel.isDeviceAvailableForConnection(device)) {
             val intent = Intent(context, BleService::class.java)
             intent.putExtra("device_address", device.address)

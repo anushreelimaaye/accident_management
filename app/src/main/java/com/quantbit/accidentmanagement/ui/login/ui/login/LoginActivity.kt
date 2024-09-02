@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         //val loading = binding.loading
 
+
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
@@ -70,11 +71,12 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
+
             }
             setResult(Activity.RESULT_OK)
 
             //Complete and destroy login activity once successful
-            finish()
+
         })
 
         username.afterTextChanged {
@@ -119,6 +121,7 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToHome() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
 
     }
 
